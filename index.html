@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="theme-color" content="#FFFDF8"/>
+  <title>Cotizame el Coso</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <!-- DM Sans con italic igual que app-1 -->
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./css/tokens.css"/>
+  <link rel="stylesheet" href="./css/app.css"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>💰</text></svg>"/>
+  <style>
+
+    * { font-family: 'DM Sans', sans-serif; }
+    h1, h2, h3, h4, h5, h6,
+    .fw-black, .fw-bold, .fw-semibold,
+    .hero-section h1, .hero-section h2,
+    #stat-objects, #stat-valuations, #stat-avg-price,
+    .stats-hero-price, .nav-item-btn, .nav-post-label,
+    .cat-pill, .dash-tab, .auth-tab,
+    button[id$="-btn"], .btn-warning,
+    [style*="font-family:'Syne'"], [style*='font-family:"Syne"'] {
+      font-family: 'Syne', sans-serif !important;
+    }
+    p, span, div, label, input, textarea, select, small, .text-muted, .form-label, .form-text, .small, .badge {
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    @media (min-width: 480px) {
+      html {
+        background-color: #dfe5e7;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cg fill='none' stroke='%23c5cdd0' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round' opacity='0.55'%3E%3Cpath d='M8 14 Q8 10 12 10 L28 10 Q32 10 32 14 L32 22 Q32 26 28 26 L14 26 L8 32 L9 26 Q8 26 8 22 Z'/%3E%3Cpath d='M72 50 Q72 46 68 46 L52 46 Q48 46 48 50 L48 58 Q48 62 52 62 L66 62 L72 68 L71 62 Q72 62 72 58 Z'/%3E%3Cpath d='M38 38 C38 35 42 33 42 37 C42 33 46 35 46 38 C46 41 42 44 42 44 C42 44 38 41 38 38 Z'/%3E%3Cpath d='M17 52 L18.2 55.6 L22 55.6 L19 57.8 L20.2 61.4 L17 59.2 L13.8 61.4 L15 57.8 L12 55.6 L15.8 55.6 Z'/%3E%3Ccircle cx='61' cy='20' r='7'/%3E%3Cpath d='M57 21 Q61 25 65 21'/%3E%3Ccircle cx='59' cy='18.5' r='1' fill='%23c5cdd0'/%3E%3Ccircle cx='63' cy='18.5' r='1' fill='%23c5cdd0'/%3E%3Ccircle cx='38' cy='14' r='1.5' fill='%23c5cdd0'/%3E%3Ccircle cx='42' cy='14' r='1.5' fill='%23c5cdd0'/%3E%3Ccircle cx='46' cy='14' r='1.5' fill='%23c5cdd0'/%3E%3Cpath d='M10 68 L14 64 L18 68 L14 72 Z'/%3E%3C/g%3E%3C/svg%3E");
+        background-repeat: repeat;
+        background-size: 80px 80px;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+        background: transparent !important;
+        padding: 0 !important;
+      }
+    }
+
+    #app-shell {
+      width: 100%;
+      max-width: 430px;
+      background: var(--bg);
+      height: 100dvh;
+      max-height: 100dvh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    #app-content {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      position: relative;
+    }
+    .bottomnav {
+      flex-shrink: 0;
+    }
+    @media (min-width: 480px) {
+      #app-shell {
+        box-shadow: 0 0 0 2px var(--ink), 8px 8px 0 var(--ink);
+        height: 100vh;
+        max-height: 100vh;
+      }
+    }
+
+    nav.navbar .fw-black {
+      font-family: 'Syne', sans-serif !important;
+      font-weight: 800 !important;
+      font-size: 17px !important;
+      letter-spacing: -.03em !important;
+      color: var(--ink) !important;
+    }
+
+    nav.navbar .badge.bg-warning {
+      font-family: 'Syne', sans-serif !important;
+      font-weight: 700 !important;
+      font-size: 12px !important;
+      background: var(--tangerine) !important;
+      color: #fff !important;
+      padding: 2px 9px 3px !important;
+      border-radius: 5px !important;
+      border: 1.5px solid var(--ink) !important;
+      box-shadow: 2px 2px 0 var(--ink) !important;
+      transform: rotate(-1.2deg) !important;
+      display: inline-block !important;
+      line-height: 1.4 !important;
+    }
+
+
+    nav.navbar {
+      background: var(--bg) !important;
+      border-bottom: 2px solid var(--ink) !important;
+    }
+  
+    #topbar-login {
+      width: 36px !important;
+      height: 36px !important;
+      border-radius: 10px !important;
+      border: 1.5px solid var(--ink) !important;
+      background: var(--bg) !important;
+      color: var(--ink) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      box-shadow: 2px 2px 0 var(--ink) !important;
+      padding: 0 !important;
+      font-size: 0 !important; 
+    }
+    #topbar-login svg { width: 17px; height: 17px; }
+
+    
+    .hero-section {
+      background: var(--bg) !important;
+      border-bottom: 2px solid var(--ink) !important;
+      padding: 0 !important;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-stripe {
+      display: flex;
+      height: 5px;
+    }
+    
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, var(--surface3) 1.2px, transparent 1.2px);
+      background-size: 20px 20px;
+      pointer-events: none;
+      opacity: .9;
+      z-index: 0;
+    }
+
+    .hero-section > div[style*="font-size:7rem"] {
+      position: absolute !important;
+      right: 16px !important;
+      top: 24px !important;
+      font-size: 56px !important;
+      opacity: 1 !important;
+      filter: drop-shadow(2px 4px 0 rgba(24,20,15,.12));
+      animation: floatBob 3.5s ease-in-out infinite;
+    }
+    @keyframes floatBob {
+      0%,100% { transform: translateY(0) rotate(-3deg); }
+      50%      { transform: translateY(-7px) rotate(2deg); }
+    }
+   
+    .hero-section > div:not(.hero-stripe):not([style*="font-size:7rem"]) {
+      padding: 20px 16px 22px;
+      position: relative;
+      z-index: 1;
+    }
+   
+    .hero-section > div > div[style*="font-size:.72rem"] {
+      font-family: 'DM Sans', sans-serif !important;
+      font-size: 10px !important;
+      font-weight: 700 !important;
+      letter-spacing: .12em !important;
+      text-transform: uppercase !important;
+      color: var(--ink3) !important;
+      margin-bottom: 10px !important;
+    }
+  
+    .hero-section h1 {
+      font-family: 'Syne', sans-serif !important;
+      font-size: 36px !important;
+      font-weight: 800 !important;
+      letter-spacing: -.04em !important;
+      line-height: .98 !important;
+      color: var(--ink) !important;
+      margin-bottom: 12px !important;
+    }
+
+    .hero-section h1 mark {
+      background: var(--tangerine) !important;
+      border-radius: 5px !important;
+      padding: 0 5px 2px !important;
+      color: var(--bg) !important;
+      border: 1.5px solid var(--ink) !important;
+      box-shadow: 2px 2px 0 var(--ink) !important;
+      display: inline-block !important;
+      transform: rotate(-.6deg) !important;
+      font-style: italic !important;
+    }
+    
+    .hero-section p {
+      font-family: 'DM Sans', sans-serif !important;
+      font-size: 13px !important;
+      color: var(--ink3) !important;
+      font-weight: 500 !important;
+      line-height: 1.45 !important;
+    }
+
+    .row.g-0.border-bottom {
+      background: var(--surface) !important;
+      border-bottom: 2px solid var(--ink) !important;
+    }
+    .row.g-0.border-bottom .col-4 {
+      border-color: var(--ink) !important;
+      padding: 14px !important;
+    }
+    .row.g-0.border-bottom .fw-bold.fs-4,
+    #stat-objects, #stat-valuations, #stat-avg-price {
+      font-family: 'Syne', sans-serif !important;
+      font-size: 21px !important;
+      font-weight: 800 !important;
+      letter-spacing: -.03em !important;
+      color: var(--ink) !important;
+      margin-bottom: 1px !important;
+    }
+    .row.g-0.border-bottom .text-muted.small {
+      font-size: 10px !important;
+      font-weight: 700 !important;
+      letter-spacing: .07em !important;
+      text-transform: uppercase !important;
+      color: var(--ink4) !important;
+    }
+    
+    .row.g-0 .col-4.border-end { border-right-color: var(--ink) !important; }
+
+    
+    #cat-filter { border-bottom: 2px solid var(--ink) !important; }
+
+    .d-flex.justify-content-between.align-items-center.py-2 {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+    .d-flex.justify-content-between.align-items-center.py-2 .fw-semibold {
+      font-family: 'Syne', sans-serif !important;
+      font-size: 11px !important;
+      font-weight: 600 !important;
+      letter-spacing: .09em !important;
+      text-transform: uppercase !important;
+      color: var(--ink3) !important;
+    }
+    .d-flex.justify-content-between.align-items-center.py-2 .text-warning {
+      font-size: 12px !important;
+      font-weight: 700 !important;
+      color: var(--tangerine) !important;
+    }
+
+    #cat-select-grid .cat-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 10px 4px;
+      background: var(--surface);
+      border: 1.5px solid var(--ink);
+      border-radius: var(--r);
+      cursor: pointer;
+      transition: all .14s;
+      box-shadow: var(--sh-sm);
+      text-align: center;
+    }
+    #cat-select-grid .cat-tile:hover { transform: translate(-1px,-1px); box-shadow: var(--sh); }
+    #cat-select-grid .cat-tile.selected { background: var(--ink); color: var(--gold); box-shadow: var(--sh); }
+    #cat-select-grid .cat-tile .cat-tile-emoji { font-size: 1.5rem; line-height: 1; }
+    #cat-select-grid .cat-tile .cat-tile-label { font-size: .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--ink2); line-height: 1.2; }
+    /* 10. Todas las border-bottom y border-end: negras */
+    .border-bottom { border-bottom-color: var(--ink) !important; }
+    .border-end    { border-right-color: var(--ink) !important; }
+  </style>
+  <script src="./js/lang.js"></script>
+</head>
+<body>
+<div id="app-shell">
+
+<nav class="navbar sticky-top px-3" style="height:56px;background:var(--bg);border-bottom:2px solid var(--ink)">
+  <div class="d-flex align-items-center gap-2">
+    <span class="fw-black fs-5" style="letter-spacing:-0.5px;color:var(--ink)" data-notranslate>Cotizame</span>
+    <span class="badge bg-warning text-dark fw-semibold" data-notranslate>el Coso</span>
+  </div>
+  <div class="d-flex gap-2 align-items-center">
+    <button class="btn btn-sm btn-dark position-relative" id="btn-notifs" style="display:none">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <div class="notif-dot" id="notif-dot" style="display:none"></div>
+    </button>
+    <div id="topbar-user-area" style="display:none!important;align-items:center;gap:6px">
+      <button class="btn btn-sm btn-warning fw-bold" id="topbar-avatar" style="border-radius:50%;width:34px;height:34px;padding:0;font-size:.8rem">??</button>
+      <button class="btn btn-sm fw-bold" id="topbar-logout" style="background:var(--red);color:#fff;border:1.5px solid var(--ink);border-radius:var(--r-sm);font-size:.9rem;padding:5px 10px">✖</button>
+    </div>
+    <button class="btn btn-sm btn-outline-dark" id="topbar-login">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Ingresar
+    </button>
+  </div>
+</nav>
+
+<div class="ticker-wrap">
+  <div class="ticker-track" id="ticker-track">
+    <span class="ticker-item">Cargando objetos…</span>
+  </div>
+</div>
+
+<div id="app-content">
+<div id="screen-home" class="d-none">
+  <div class="hero-section">
+    <div class="hero-stripe" style="display:flex;height:5px">
+      <span style="background:#FF6B2B;flex:1"></span><span style="background:#F59E0B;flex:1"></span>
+      <span style="background:#10B981;flex:1"></span><span style="background:#0EA5E9;flex:1"></span>
+      <span style="background:#7C3AED;flex:1"></span>
+    </div>
+    <div style="padding:20px 16px 22px;position:relative;z-index:1">
+      <div id="hero-eyebrow" style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px">Valoración Comunitaria</div>
+      <h1 class="fw-black mb-2" style="font-size:36px;letter-spacing:-.04em;line-height:.98;color:var(--ink);font-family:'Syne',sans-serif"><span id="hero-title-1">¿Cuánto vale</span><br><mark id="hero-title-2" style="background:var(--gold);border-radius:5px;padding:0 5px 2px;color:var(--ink);border:1.5px solid var(--ink);box-shadow:2px 2px 0 var(--ink);display:inline-block;transform:rotate(-.6deg);font-style:italic">este coso?</mark></h1>
+      <p id="hero-sub" style="font-size:13px;color:var(--ink3);font-weight:500;line-height:1.45;margin:0;max-width:260px">Subí cualquier cosa y dejá que la comunidad la valore.</p>
+    </div>
+    <div style="position:absolute;right:10px;top:48px;font-size:60px;pointer-events:none;z-index:1;filter:drop-shadow(2px 4px 0 rgba(24,20,15,.12));animation:floatBob 3s ease-in-out infinite">💰</div>
+  </div>
+
+  <div class="container-fluid px-0">
+    <div class="row g-0 border-bottom">
+      <div class="col-4 text-center py-3 border-end">
+        <div class="fw-bold fs-4" id="stat-objects">—</div>
+        <div class="text-muted small" data-i18n="stat_objects">Objetos</div>
+      </div>
+      <div class="col-4 text-center py-3 border-end">
+        <div class="fw-bold fs-4" id="stat-valuations">—</div>
+        <div class="text-muted small" data-i18n="stat_valuations">Cotizaciones</div>
+      </div>
+      <div class="col-4 text-center py-3">
+        <div class="fw-bold fs-4" id="stat-avg-price">—</div>
+        <div class="text-muted small" data-i18n="stat_avg_price">Precio medio</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-filter-wrap">
+    <button class="cat-filter-arrow arrow-left hidden" id="cat-arrow-left" aria-label="Anterior">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div id="cat-filter"></div>
+    <button class="cat-filter-arrow arrow-right" id="cat-arrow-right" aria-label="Siguiente">
+      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+
+  <div class="px-3 pb-2">
+    <div class="d-flex justify-content-between align-items-center py-2">
+      <span class="fw-semibold" data-i18n="feed_active">Objetos activos</span>
+    </div>
+    <div id="feed-cards" class="list-group list-group-flush"></div>
+  </div>
+</div>
+
+<div id="screen-post" class="d-none" style="background:var(--bg)">
+
+  <div style="background:var(--bg);border-bottom:2px solid var(--ink);padding:20px 16px 18px;position:relative;overflow:hidden">
+    <div style="position:absolute;inset:0;background-image:radial-gradient(circle,var(--surface3) 1.2px,transparent 1.2px);background-size:20px 20px;pointer-events:none;opacity:.9;z-index:0"></div>
+    <div style="position:relative;z-index:1">
+      <p style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:6px" id="post-eyebrow">Enviar para cotizar</p>
+      <h2 style="font-family:'Syne',sans-serif;font-weight:800;font-size:2rem;letter-spacing:-.04em;line-height:.98;color:var(--ink);margin-bottom:0" id="post-header-title">Publicar un Coso</h2>
+    </div>
+  </div>
+
+  <div id="post-step-bar" style="display:flex;align-items:center;padding:12px 16px;background:var(--surface);border-bottom:2px solid var(--ink);gap:0;position:sticky;top:0;z-index:40">
+    <div class="post-step-ind" id="step-ind-1" data-step="1" style="display:flex;align-items:center;gap:5px;cursor:pointer">
+      <div class="step-circle" id="step-circle-1" style="width:26px;height:26px;border-radius:50%;background:var(--tangerine);border:2px solid var(--ink);color:#fff;font-size:.7rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .22s;box-shadow:2px 2px 0 var(--ink)">1</div>
+      <span class="step-label" id="step-label-1" style="font-size:.72rem;font-weight:700;color:var(--tangerine);font-family:'Syne',sans-serif;transition:color .22s">Foto</span>
+    </div>
+    <div class="step-line" id="step-line-1" style="flex:1;height:2px;background:var(--border);margin:0 6px;transition:background .3s"></div>
+    <div class="post-step-ind" id="step-ind-2" data-step="2" style="display:flex;align-items:center;gap:5px;cursor:default">
+      <div class="step-circle" id="step-circle-2" style="width:26px;height:26px;border-radius:50%;background:var(--surface3);border:2px solid var(--ink);color:var(--ink);font-size:.7rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .22s">2</div>
+      <span class="step-label" id="step-label-2" style="font-size:.72rem;font-weight:700;color:var(--ink3);font-family:'Syne',sans-serif;transition:color .22s">Cat.</span>
+    </div>
+    <div class="step-line" id="step-line-2" style="flex:1;height:2px;background:var(--border);margin:0 6px;transition:background .3s"></div>
+    <div class="post-step-ind" id="step-ind-3" data-step="3" style="display:flex;align-items:center;gap:5px;cursor:default">
+      <div class="step-circle" id="step-circle-3" style="width:26px;height:26px;border-radius:50%;background:var(--surface3);border:2px solid var(--ink);color:var(--ink);font-size:.7rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .22s">3</div>
+      <span class="step-label" id="step-label-3" style="font-size:.72rem;font-weight:700;color:var(--ink3);font-family:'Syne',sans-serif;transition:color .22s">Desc.</span>
+    </div>
+    <div class="step-line" id="step-line-3" style="flex:1;height:2px;background:var(--border);margin:0 6px;transition:background .3s"></div>
+    <div class="post-step-ind" id="step-ind-4" data-step="4" style="display:flex;align-items:center;gap:5px;cursor:default">
+      <div class="step-circle" id="step-circle-4" style="width:26px;height:26px;border-radius:50%;background:var(--surface3);border:2px solid var(--ink);color:var(--ink);font-size:.7rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .22s">4</div>
+      <span class="step-label" id="step-label-4" style="font-size:.72rem;font-weight:700;color:var(--ink3);font-family:'Syne',sans-serif;transition:color .22s">Enviar</span>
+    </div>
+  </div>
+
+  <div id="post-panel-1" style="padding:20px 16px">
+    <p style="font-size:.8rem;color:var(--ink3);margin-bottom:16px;font-weight:500" id="post-step1-hint" id="post-step1-hint">Sacale una foto al coso que querés cotizar.</p>
+    <div class="upload-zone d-block" id="upload-zone" style="cursor:pointer;background:var(--surface2);border:2px dashed var(--ink3);border-radius:var(--r-xl);min-height:200px;display:flex!important;align-items:center;justify-content:center">
+      <div id="upload-zone-inner" class="text-center" style="padding:20px">
+        <div style="font-size:2.8rem;margin-bottom:10px;opacity:.4">📷</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;color:var(--ink);margin-bottom:5px" id="upload-title" id="upload-title">Soltá la foto acá</div>
+        <div style="font-size:.75rem;color:var(--ink4);margin-bottom:14px" id="upload-sub" id="upload-sub">JPG, PNG o WEBP · Máx 10MB</div>
+        <div style="display:inline-block;padding:6px 18px;background:var(--ink);color:var(--gold);font-size:.78rem;font-weight:700;border-radius:var(--r-pill);box-shadow:var(--sh-sm)" id="upload-badge">o tocá para elegir</div>
+      </div>
+      <input type="file" id="photo-file-input" accept="image/jpeg,image/png,image/webp" style="display:none"/>
+    </div>
+<button id="post-next-1" style="margin-top:20px;width:100%;padding:14px;font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;background:var(--tangerine);color:#ffffff;border:2px solid var(--ink);border-radius:var(--r);box-shadow:var(--sh);cursor:pointer;transition:all .2s" disabled>
+  <span class="post-continue-label">Continuar</span>
+    </button>
+    <button id="post-back-1" style="width:100%;margin-top:10px;padding:10px;font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;background:none;border:1.5px solid var(--ink);border-radius:var(--r);color:var(--ink2);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg> Cancelar</button>
+  </div>
+
+  <div id="post-panel-2" style="display:none;padding:20px 16px">
+    <p style="font-size:.8rem;color:var(--ink3);margin-bottom:16px;font-weight:500" id="post-step2-hint" id="post-step2-hint">¿En qué categoría entra este coso?</p>
+    <div id="cat-select-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px"></div>
+    <button id="post-next-2" style="margin-top:20px;width:100%;padding:14px;font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;background:var(--surface3);color:var(--ink3);border:2px solid var(--ink);border-radius:var(--r);box-shadow:none;cursor:not-allowed;transition:all .2s" disabled>
+  <span class="post-continue-label">Continuar</span>
+    </button>
+    <button id="post-back-2" style="width:100%;margin-top:10px;padding:10px;font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;background:none;border:1.5px solid var(--ink);border-radius:var(--r);color:var(--ink2);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg> Atrás</button>
+  </div>
+
+  <div id="post-panel-3" style="display:none;padding:20px 16px">
+    <p style="font-size:.8rem;color:var(--ink3);margin-bottom:16px;font-weight:500" id="post-step3-hint" id="post-step3-hint">Contanos un poco más sobre el objeto.</p>
+    <label style="display:block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:6px"><span id="post-desc-label-text">Descripción</span> <span id="post-desc-optional" style="font-weight:400;text-transform:none;letter-spacing:0">(opcional)</span></label>
+    <textarea class="form-control" id="desc-input" rows="4"  placeholder="¿Qué es? ¿Marca, modelo, estado?…" style="margin-bottom:16px;font-size:.9rem"></textarea>
+    <div style="background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--r);padding:10px 14px;margin-bottom:20px">
+      <div class="small" id="post-anon-text" style="font-size:.8rem;color:var(--ink3)">Tu publicación es anónima.</div>
+    </div>
+    <button id="post-next-3" style="width:100%;padding:14px;font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;background:var(--tangerine);color:#fff;border:2px solid var(--ink);border-radius:var(--r);box-shadow:var(--sh);cursor:pointer;transition:all .2s">
+      <span id="post-next3-label">Enviar →</span>
+    </button>
+    <button id="post-back-3" style="width:100%;margin-top:10px;padding:10px;font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;background:none;border:1.5px solid var(--ink);border-radius:var(--r);color:var(--ink2);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg> Atrás</button>
+  </div>
+
+  <div id="post-panel-4" style="display:none;padding:20px 16px">
+    <p style="font-size:.8rem;color:var(--ink3);margin-bottom:16px;font-weight:500" id="post-step4-hint" id="post-step4-hint">Revisá todo antes de publicar.</p>
+
+    <div style="border:2px solid var(--ink);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--sh);margin-bottom:20px">
+      <div id="post-preview-img" style="width:100%;height:160px;background:rgba(245,158,11,.08);display:flex;align-items:center;justify-content:center;font-size:3.5rem">📷</div>
+      <div style="padding:12px 16px;border-top:2px solid var(--ink)">
+        <span id="post-preview-cat" style="font-size:.72rem;font-weight:700;background:var(--tangerine);color:#fff;padding:2px 10px;border-radius:var(--r-pill);margin-bottom:8px;display:inline-block">—</span>
+        <p id="post-preview-desc" style="margin:6px 0 0;font-size:.9rem;color:var(--ink3);font-style:italic">Sin descripción</p>
+      </div>
+    </div>
+
+    <button class="btn btn-warning w-100 fw-bold py-3" id="btn-submit-post" style="border-radius:var(--r);border:2px solid var(--ink);box-shadow:var(--sh);font-family:'Syne',sans-serif;font-size:1rem;letter-spacing:.02em">
+      <span id="post-publish-label">Publicar ahora</span>
+    </button>
+    <button id="post-back-4" style="width:100%;margin-top:10px;padding:10px;font-family: 'Syne', sans-serif;font-size:.82rem;font-weight: 800;background:none;border:1.5px solid var(--ink);border-radius:var(--r);color:var(--ink2);cursor:pointer;font-weight:600">
+      <span id="post-edit-label">Editar</span>
+    </button>
+  </div>
+</div>
+
+<div id="screen-val" class="d-none">
+  <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--bg);border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:50">
+    <button id="val-back-btn" style="width:34px;height:34px;padding:0;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--ink);border-radius:var(--r-sm);background:var(--surface);cursor:pointer;flex-shrink:0">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <strong style="flex:1;font-size:1rem;color:var(--ink)" data-i18n="val_title">Cotizalo</strong>
+    <span id="val-anon-chip" style="font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:var(--surface2);color:var(--ink3);padding:3px 10px;border-radius:var(--r-pill);border:1.5px solid var(--border)" id="val-anon-chip" data-i18n="val_anon">Anónimo</span>
+  </div>
+
+  <div style="margin:14px 16px;background:var(--surface);border:1.5px solid var(--ink);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--sh)">
+    <div id="val-visual" style="width:100%;height:180px;display:flex;align-items:center;justify-content:center;background:rgba(245,158,11,.06);position:relative;overflow:hidden">
+      <span id="val-emoji" style="font-size:4.5rem">📦</span>
+    </div>
+    <div style="padding:12px 16px;border-top:1.5px solid var(--ink)">
+      <div style="font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:3px" id="val-object-title">—</div>
+      <div style="font-size:.75rem;color:var(--ink3)" id="val-object-meta">—</div>
+    </div>
+  </div>
+
+  <div style="margin:0 16px 14px">
+    <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--ink4);margin-bottom:8px" data-i18n="val_community">La comunidad hasta ahora</div>
+    <div style="display:flex;gap:8px">
+      <div style="flex:1;background:var(--surface);border:1.5px solid var(--ink);border-radius:var(--r-sm);padding:10px 6px;text-align:center;box-shadow:var(--sh-sm)">
+        <div style="font-size:1rem;font-weight:800;color:var(--tangerine)" id="val-mini-avg">—</div>
+        <div style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink4);margin-top:2px">Promedio</div>
+      </div>
+      <div style="flex:1;background:var(--surface);border:1.5px solid var(--ink);border-radius:var(--r-sm);padding:10px 6px;text-align:center;box-shadow:var(--sh-sm)">
+        <div style="font-size:1rem;font-weight:800;color:var(--ink)" id="val-mini-med">—</div>
+        <div style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink4);margin-top:2px">Mediana</div>
+      </div>
+      <div style="flex:1;background:var(--surface);border:1.5px solid var(--ink);border-radius:var(--r-sm);padding:10px 6px;text-align:center;box-shadow:var(--sh-sm)">
+        <div style="font-size:1rem;font-weight:800;color:var(--ink)" id="val-mini-votes">—</div>
+        <div style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink4);margin-top:2px" data-i18n="val_votes">Cotiz.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <div style="margin:0 16px 16px;background:var(--surface);border:2px solid var(--ink);border-radius:var(--r-xl);padding:18px;box-shadow:3px 3px 0 rgba(255,107,43,.15)">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px">
+      <span style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3)" data-i18n="val_your">Tu cotización</span>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:flex-end">
+
+      <div style="flex:0 0 auto">
+        <label style="display:block;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:5px; margin-left: 5px;" data-i18n="val_currency">Moneda</label>
+        <select id="currency-select"
+          style="height:52px;padding:0 10px;border:1.5px solid var(--ink);border-radius:var(--r-sm);background:var(--surface2);color:var(--ink);font-size:.88rem;font-weight:600;cursor:pointer;min-width:108px;appearance:auto">
+          <option value="UYU">🇺🇾 UYU</option>
+          <option value="USD">🇺🇸 USD</option>
+          <option value="ARS">🇦🇷 ARS</option>
+          <option value="BRL">🇧🇷 BRL</option>
+          <option value="EUR">🇪🇺 EUR</option>
+        </select>
+      </div>
+
+      <div style="flex:1">
+        <label style="display:block;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:5px; margin-left: 5px;" data-i18n="val_amount">Monto</label>
+        <input
+          type="number"
+          id="price-input"
+          min="0"
+          step="any"
+          placeholder="Ej: 15000"
+          style="height:52px;width:100%;box-sizing:border-box;padding:0 14px;border:1.5px solid var(--ink);border-radius:var(--r-sm);background:var(--surface2);color:var(--tangerine);font-size:1.4rem;font-weight:900;letter-spacing:-.03em"
+        />
+      </div>
+
+    </div>
+  </div>
+
+  <div style="padding:0 16px 16px">
+    <button id="btn-submit-val" style="width:100%;padding:14px;font-size:1rem;font-weight:700;background:var(--tangerine);color:#fff;border:2px solid var(--ink);border-radius:var(--r);box-shadow:var(--sh);cursor:pointer">
+      <span>Mandar mi cotización</span>
+    </button>
+  </div>
+</div>
+
+<div id="screen-stats" class="d-none">
+
+  <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--bg);border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:50">
+    <button id="stats-back-btn" style="width:34px;height:34px;padding:0;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--ink);border-radius:var(--r-sm);background:var(--surface);cursor:pointer;flex-shrink:0">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <strong style="flex:1;font-size:1rem;color:var(--ink)" data-i18n="stats_title">Reporte de precio</strong>
+  </div>
+
+  <div style="background:var(--bg);padding:28px 20px 32px;position:relative;overflow:hidden; border-bottom:2px solid var(--ink)">
+    <div style="font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:6px" data-i18n="stats_consensus">Consenso de la comunidad</div>
+    <div id="stats-main-price" style="font-family:Syne,sans-serif;font-size:3.2rem;font-weight:900;color:var(--tangerine);letter-spacing:-.04em;line-height:1">—</div>
+    <div id="stats-based-on" style="font-size:.8rem;color:rgba(255,255,255,.4);margin-top:6px">—</div>
+    <div style="position:absolute;right:-8px;bottom:-12px;font-size:7rem;pointer-events:none">💰</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1.5px solid var(--ink)">
+    <div style="padding:16px 18px;border-right:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink)">
+      <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--ink4);margin-bottom:4px" data-i18n="stats_avg">Promedio</div>
+      <div id="stats-avg" style="font-size:1.35rem;font-weight:900;color:var(--ink);letter-spacing:-.02em">—</div>
+    </div>
+    <div style="padding:16px 18px;border-bottom:1.5px solid var(--ink)">
+      <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--ink4);margin-bottom:4px" data-i18n="stats_median">Mediana</div>
+      <div id="stats-med" style="font-size:1.35rem;font-weight:900;color:var(--ink);letter-spacing:-.02em">—</div>
+    </div>
+    <div style="padding:16px 18px;border-right:1.5px solid var(--ink)">
+      <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--ink4);margin-bottom:4px" data-i18n="stats_min">Mínimo</div>
+      <div id="stats-low" style="font-size:1.35rem;font-weight:900;color:#10B981;letter-spacing:-.02em">—</div>
+    </div>
+    <div style="padding:16px 18px">
+      <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--ink4);margin-bottom:4px" data-i18n="stats_max">Máximo</div>
+      <div id="stats-high" style="font-size:1.35rem;font-weight:900;color:#EF4444;letter-spacing:-.02em">—</div>
+    </div>
+  </div>
+
+  <div style="margin:16px 16px 0;background:var(--surface);border:1.5px solid var(--ink);border-radius:var(--r-xl);overflow:hidden">
+    <div style="padding:14px 16px 10px;border-bottom:1.5px solid var(--border)">
+      <span style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--ink3)" data-i18n="stats_dist">Distribución de precios</span>
+    </div>
+    <div style="padding:12px 16px 16px" id="dist-rows"></div>
+  </div>
+
+<div style="padding:4px 16px 32px">
+  <button id="stats-home-btn"
+    style="width:100%;
+           padding:13px;
+           font-size:.9rem;
+           font-weight:700;
+           background:var(--tangerine);
+           color:var(--bg);
+           border:1.5px solid var(--ink);
+           border-radius:var(--r);
+           cursor:pointer;
+           letter-spacing:.01em;
+           box-shadow: 4px 4px 0 var(--ink);">
+    <span>Volver al inicio</span>
+  </button>
+</div>
+</div>
+
+<div id="screen-notifs" class="d-none">
+  <div class="d-flex justify-content-between align-items-center px-3 py-3 border-bottom bg-white sticky-top">
+    <strong data-i18n="notifs_title">Notificaciones</strong>
+<button id="btn-mark-all-read" style="
+  padding: 2px 8px;     
+  font-size: 1rem;
+  font-family: Syne, sans-serif;
+  font-weight: 100;
+  background: var(--tangerine);
+  color: #fff;
+  border: 2px solid #000;  
+  border-radius: var(--r);
+  box-shadow: var(--sh);
+  cursor: pointer;
+  display: inline-block; ">
+</button>
+
+  </div>
+  <div id="notif-list" class="list-group list-group-flush"></div>
+</div>
+
+<div id="screen-settings" class="d-none">
+  <div class="bg-dark text-white px-3 py-4 mb-3">
+    <h2 class="fw-bold mb-1">Ajustes</h2>
+    <p class="text-white-50 mb-0"></p>
+  </div>
+  <div class="px-3">
+    <p class="text-muted small fw-semibold text-uppercase mb-1" id="sg-account-label" style="display:none">Cuenta</p>
+    <div class="list-group mb-3">
+      <button class="list-group-item list-group-item-action d-flex align-items-center gap-3" id="settings-account-row" style="display:none!important">
+        <span class="fs-4">👤</span>
+        <div><div class="fw-medium">Mi Cuenta</div><div class="text-muted small">Ver perfil y categorías</div></div>
+        <span class="ms-auto text-muted">→</span>
+      </button>
+    </div>
+
+    <p class="text-muted small fw-semibold text-uppercase mb-1" id="sg-login-label">Cuenta</p>
+    <div class="list-group mb-3">
+      <button class="list-group-item list-group-item-action d-flex align-items-center gap-3" id="settings-login-row">
+        <span class="fs-4">🔑</span>
+        <div><div class="fw-medium">Iniciar sesión / Registrarse</div><div class="text-muted small">Recibí notificaciones de tus categorías</div></div>
+        <span class="ms-auto text-muted">→</span>
+      </button>
+    </div>
+
+    <p class="text-muted small fw-semibold text-uppercase mb-1" data-i18n="settings_language">Idioma</p>
+    <div class="list-group mb-3">
+      <div class="list-group-item d-flex align-items-center gap-3">
+        <span class="fs-4">🌍</span>
+        <div><div class="fw-medium">Language / Idioma</div></div>
+        <div class="ms-auto d-flex">
+          <div class="ls-opt" id="lang-en" data-notranslate>EN</div>
+          <div class="ls-opt active" id="lang-es" data-notranslate>ES</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="settings-notifs-group" style="display:none">
+      <p class="text-muted small fw-semibold text-uppercase mb-1" data-i18n="settings_notifs_label">Notificaciones por categoría</p>
+      <div class="list-group mb-3" id="settings-notif-list">
+        <div class="list-group-item text-muted small text-center py-3">Cargando…</div>
+      </div>
+    </div>
+
+    <div id="settings-history-group" style="display:none">
+      <div class="list-group mb-3">
+        <button id="settings-history-toggle" class="list-group-item list-group-item-action d-flex align-items-center gap-3" style="cursor:pointer">
+          <span class="fs-4">📋</span>
+          <div class="flex-grow-1">
+            <div class="fw-medium" id="settings-history-title">Mis publicaciones recientes</div>
+            <div class="text-muted small" id="settings-history-sub">Ver lo que publicaste</div>
+          </div>
+          <span id="settings-history-arrow" class="ms-auto text-muted">↓</span>
+        </button>
+        <div id="settings-history-list" style="display:none"></div>
+      </div>
+    </div>
+
+    <p class="text-muted small fw-semibold text-uppercase mb-1" data-i18n="settings_about">Acerca de</p>
+    <div class="list-group mb-4">
+      <button class="list-group-item list-group-item-action d-flex align-items-center gap-3" id="row-terms">
+        <span class="fs-4">📄</span><div class="fw-medium" id="settings-terms-label">Términos y privacidad</div><span class="ms-auto text-muted">→</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="screen-terms" class="d-none">
+  <div class="d-flex align-items-center gap-3 px-3 py-3 border-bottom bg-white sticky-top">
+    <button class="btn btn-sm btn-light" id="terms-back-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <strong id="terms-header">Términos y privacidad</strong>
+  </div>
+  <div class="px-3 py-4">
+    <div class="text-center mb-4"><div class="display-4 mb-2"></div><h2 class="fw-bold" id="terms-h2">Términos y privacidad</h2><p class="text-muted small" id="terms-updated">Última actualización: enero 2025</p></div>
+    <div class="card p-3 mb-4">
+      <div style="font-size:3rem;font-weight:900;color:var(--surface3)">01</div>
+      <h5 class="fw-bold" id="terms-01-title">Uso de la plataforma</h5>
+      <p class="text-muted small" id="terms-01-body">Cotizame el Coso es una plataforma comunitaria de valoración de objetos. Al usar la app, aceptás estas condiciones. El servicio está destinado a personas mayores de 13 años.</p>
+    </div>
+    <div class="card p-3 mb-4">
+      <div style="font-size:3rem;font-weight:900;color:var(--surface3)">02</div>
+      <h5 class="fw-bold" id="terms-02-title">Anonimato y datos</h5>
+      <p class="text-muted small" id="terms-02-body">Las publicaciones son anónimas por defecto. Las cotizaciones nunca se asocian a tu identidad.</p>
+    </div>
+    <div class="card p-3 mb-4">
+      <div style="font-size:3rem;font-weight:900;color:var(--surface3)">03</div>
+      <h5 class="fw-bold" id="terms-03-title">Contenido publicado</h5>
+      <p class="text-muted small" id="terms-03-body">Al publicar una imagen, confirmás que tenés derecho a hacerlo. Queda prohibido publicar contenido ilegal, violento, sexual o que viole derechos de terceros.</p>
+    </div>
+  </div>
+</div>
+
+<div id="screen-auth" class="d-none" style="background:var(--surface2);padding-bottom:32px">
+  <div style="max-width:420px;margin:0 auto;padding:32px 20px 0">
+
+    <div class="text-center mb-4">
+      <div style="font-size:2.4rem;margin-bottom:6px"></div>
+      <div class="d-flex align-items-center justify-content-center gap-2">
+        <span style="font-family:Syne,sans-serif;font-size:1.3rem;font-weight:800;letter-spacing:-.03em;color:var(--ink)" data-notranslate>Cotizame</span>
+        <span class="badge bg-warning text-dark fw-bold" style="font-size:.7rem" data-notranslate>el Coso</span>
+      </div>
+    </div>
+
+    <div style="background:var(--bg);border:2px solid var(--ink);border-radius:var(--r-xl);box-shadow:var(--sh-lg);overflow:hidden">
+
+      <!-- Tabs -->
+      <div style="display:flex;border-bottom:2px solid var(--ink)">
+        <div id="auth-tab-login" style="flex:1;padding:12px;text-align:center;font-weight:700;font-size:.9rem;cursor:pointer;background:var(--ink);color:var(--gold);transition:all .14s">Ingresar</div>
+        <div id="auth-tab-register" style="flex:1;padding:12px;text-align:center;font-weight:700;font-size:.9rem;cursor:pointer;color:var(--ink3);transition:all .14s">Registrarse</div>
+      </div>
+
+      <div style="padding:20px 20px 16px">
+        <h3 style="font-family:Syne,sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:-.03em;margin-bottom:2px;color:var(--ink)" id="auth-title">Iniciar sesión</h3>
+        <p style="font-size:.82rem;color:var(--ink3);margin-bottom:16px" id="auth-sub">Bienvenido de vuelta.</p>
+
+        <div class="alert alert-danger d-none small py-2 mb-3" id="auth-error"></div>
+
+        <div style="margin-bottom:12px">
+          <label style="display:block;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:4px" data-i18n="auth_email_label">Email</label>
+          <input class="form-control" type="email" id="auth-email" placeholder="tu@email.com" autocomplete="email"/>
+        </div>
+
+        <div style="margin-bottom:4px">
+          <label style="display:block;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:4px" data-i18n="auth_password_label">Contraseña</label>
+          <input class="form-control" type="password" id="auth-password" data-i18n-ph="auth_password_placeholder" placeholder="Mínimo 6 caracteres" autocomplete="current-password"/>
+        </div>
+
+        <div id="auth-register-fields" style="display:none;flex-direction:column;gap:12px;margin-top:12px">
+          <div>
+            <label style="display:block;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:4px" data-i18n="auth_name_label">Nombre de usuario</label>
+            <input class="form-control" type="text" id="auth-name" data-i18n-ph="auth_name_placeholder" placeholder="¿Cómo querés que te llamemos?" autocomplete="nickname"/>
+          </div>
+
+          <div style="background:rgba(245,158,11,.1);border:1.5px solid var(--gold);border-radius:var(--r);padding:12px">
+            <div style="font-size:.75rem;font-weight:700;color:var(--ink2);margin-bottom:6px" data-i18n="auth_benefits_title">Con tu cuenta podés:</div>
+            <div style="font-size:.75rem;color:var(--ink3);display:flex;flex-direction:column;gap:3px">
+              <span data-i18n="auth_benefit_1">📋 Ver historial de publicaciones</span>
+              <span data-i18n="auth_benefit_2">💰 Ver todas tus cotizaciones</span>
+              <span data-i18n="auth_benefit_3">🔔 Recibir alertas de nuevos objetos</span>
+            </div>
+          </div>
+
+          <div>
+            <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:7px">
+              <label style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3)" data-i18n="auth_cats_label">Categorías</label>
+              <span style="font-size:.68rem;color:var(--ink4)" data-i18n="auth_cats_hint">opcional — recibís alertas de estas</span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px" id="auth-cats-grid"></div>
+          </div>
+        </div>
+
+        <button id="auth-submit-btn" style="width:100%;margin-top:18px;padding:13px;font-size:1rem;font-family:Syne,sans-serif;font-weight:700;background:var(--tangerine);color:#fff;border:2px solid var(--ink);border-radius:var(--r);box-shadow:var(--sh);cursor:pointer">
+          <span id="auth-submit-label">Ingresar</span>
+        </button>
+        <button id="auth-back-btn" style="width:100%;margin-top:8px;padding:8px;font-size:.82rem;background:var(--bg);border:none;color:var(--ink3);cursor:pointer;text-decoration:underline;text-underline-offset:2px">
+          <span>Continuar sin cuenta</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="screen-dashboard" class="d-none">
+  <div class="d-flex align-items-center gap-3 px-3 py-3 border-bottom bg-white sticky-top">
+    <button class="btn btn-sm btn-light" id="dashboard-back-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <strong>Mi Actividad</strong>
+  </div>
+  <div class="border-bottom d-flex">
+    <button class="dash-tab active flex-fill" id="dash-tab-submissions">Mis Publicaciones</button>
+    <button class="dash-tab flex-fill" id="dash-tab-valuations">Mis Cotizaciones</button>
+  </div>
+  <div class="px-3 py-2 d-flex gap-2">
+    <input class="form-control form-control-sm" id="dash-search" type="text" placeholder="Buscar…"/>
+    <select class="form-select form-select-sm" id="dash-status-filter" style="width:auto">
+      <option value="">Todos</option>
+      <option value="pending">Pendiente</option>
+      <option value="approved">Aprobado</option>
+      <option value="rejected">Rechazado</option>
+    </select>
+  </div>
+  <div id="dash-list" class="list-group list-group-flush"></div>
+</div>
+
+<div id="screen-account" class="d-none">
+  <div class="bg-dark text-white text-center py-5">
+    <div class="rounded-circle bg-warning text-dark fw-black d-inline-flex align-items-center justify-content-center mb-3" style="width:72px;height:72px;font-size:1.5rem" id="account-avatar-initials">??</div>
+    <h3 class="fw-bold mb-0" id="account-name">—</h3>
+    <p class="text-white-50 mb-0" id="account-email">—</p>
+    <p class="text-white-50 small" id="account-joined">—</p>
+  </div>
+  <div class="px-3 py-4">
+    <p class="fw-semibold mb-2" data-i18n="account_my_cats">Mis categorías</p>
+    <div class="mb-4" id="account-cat-list"></div>
+    <button id="btn-logout" style="margin-top:20px;width:100%;padding:14px;font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;background:var(--tangerine);color:#ffffff;border:2px solid var(--ink);border-radius:var(--r);box-shadow:var(--sh);cursor:pointer;transition:all .2s"><span>Cerrar sesión</span></button>
+  </div>
+</div>
+</div>
+<nav class="bottomnav">
+  <button class="nav-item-btn active" id="nav-home">
+    <svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+    <span data-i18n="nav_home">Inicio</span>
+  </button>
+  <button class="nav-item-btn" id="nav-cats" style="display:none">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+    <span data-i18n="nav_cats">Categorías</span>
+  </button>
+  <button class="nav-post-btn" id="nav-post">
+    <div class="nav-post-fab">
+      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    </div>
+    <span class="nav-post-label" data-i18n="nav_post">Publicar</span>
+  </button>
+  <button class="nav-item-btn" id="nav-notifs" style="display:none">
+    <div class="position-relative d-inline-flex">
+      <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span id="nav-notif-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display:none;font-size:.55rem;min-width:16px;padding:2px 4px"></span>
+    </div>
+    <span data-i18n="nav_notifs">Alertas</span>
+  </button>
+  <button class="nav-item-btn" id="nav-settings">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    <span data-i18n="nav_settings">Ajustes</span>
+  </button>
+</nav>
+
+<div class="modal fade" id="modal-submitted" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body text-center p-4">
+        <div class="display-4 mb-2"></div>
+        <h4 class="fw-bold mb-1">¡Publicado!</h4>
+        <p class="text-muted small mb-3">Tu publicación ya está visible en el feed.</p>
+        <div id="modal-token-box" style="display:none" class="text-start mb-3 p-3 rounded" style="background:var(--surface2);border:1.5px solid var(--ink)">
+          <div id="modal-anon-title" class="fw-bold mb-1">Guardá tu ID de eliminación</div>
+          <div id="modal-anon-copy-hint" class="small text-muted mb-2">Tocá para copiarlo.</div>
+          <div class="p-2 rounded text-center fw-bold font-monospace" style="background:var(--surface);border:1.5px dashed var(--ink);font-size:.9rem;letter-spacing:.1em;cursor:pointer" id="modal-delete-token"></div>
+        </div>
+        <div id="modal-user-box" style="display:none" class="text-start mb-3 p-3 rounded" style="background:rgba(16,185,129,.08);border:1.5px solid var(--mint)">
+          <div class="fw-bold" style="font-size:.85rem">Publicado como <span id="modal-user-name">—</span></div>
+          <div class="small text-muted">Podés ver el estado en tu historial.</div>
+        </div>
+        <button class="btn btn-warning w-100 fw-bold py-2" id="modal-close-btn"><span>Entendido</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container position-fixed bottom-0 start-50 translate-middle-x mb-4" style="z-index:9999;pointer-events:none;margin-bottom:80px!important;">
+  <div id="toast" class="toast align-items-center text-bg-dark border-0" role="alert" data-bs-delay="3000" style="pointer-events:auto;">
+    <div class="d-flex">
+      <div class="toast-body fw-medium"></div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./config.js"></script>
+<script src="./js/supabase.js"></script>
+<script src="./js/data.js"></script>
+<script src="./js/screens.js"></script>
+<script src="./js/notifications.js"></script>
+<script src="./js/auth.js"></script>
+<script src="./js/feed.js"></script>
+<script src="./js/post.js"></script>
+<script src="./js/valuation.js"></script>
+<script src="./js/communities.js"></script>
+<script src="./js/dashboard.js"></script>
+<script src="./js/app.js"></script>
+<script>
+
+
+(function() {
+  function initCatArrows() {
+    var filter = document.getElementById('cat-filter');
+    var btnL   = document.getElementById('cat-arrow-left');
+    var btnR   = document.getElementById('cat-arrow-right');
+    if (!filter || !btnL || !btnR) return;
+
+    var STEP = 140;
+
+    function updateArrows() {
+      btnL.classList.toggle('hidden', filter.scrollLeft <= 4);
+      btnR.classList.toggle('hidden', filter.scrollLeft + filter.clientWidth >= filter.scrollWidth - 4);
+    }
+
+    btnL.addEventListener('click', function() {
+      filter.scrollBy({ left: -STEP, behavior: 'smooth' });
+    });
+    btnR.addEventListener('click', function() {
+      filter.scrollBy({ left: STEP, behavior: 'smooth' });
+    });
+    filter.addEventListener('scroll', updateArrows, { passive: true });
+
+    // Re-check after feed renders new pills
+    var obs = new MutationObserver(updateArrows);
+    obs.observe(filter, { childList: true });
+    updateArrows();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCatArrows);
+  } else {
+    initCatArrows();
+  }
+})();
+
+(function() {
+  var currentPostStep = 1;
+
+  function setPostStep(n) {
+    currentPostStep = n;
+    for (var i = 1; i <= 4; i++) {
+      var panel = document.getElementById('post-panel-' + i);
+      var circle = document.getElementById('step-circle-' + i);
+      var label  = document.getElementById('step-label-' + i);
+      var line   = document.getElementById('step-line-' + i);
+      if (!panel) continue;
+
+      panel.style.display = (i === n) ? '' : 'none';
+
+      if (i < n) {
+        // completed
+        circle.style.background  = 'var(--tangerine)';
+        circle.style.color       = '#fff';
+        circle.style.boxShadow   = '2px 2px 0 var(--ink)';
+        circle.textContent       = '✓';
+        label.style.color        = 'var(--tangerine)';
+      } else if (i === n) {
+        // active
+        circle.style.background  = 'var(--tangerine)';
+        circle.style.color       = '#fff';
+        circle.style.boxShadow   = '2px 2px 0 var(--ink)';
+        circle.textContent       = i;
+        label.style.color        = 'var(--tangerine)';
+      } else {
+        // future
+        circle.style.background  = 'var(--surface3)';
+        circle.style.color       = 'var(--ink)';
+        circle.style.boxShadow   = 'none';
+        circle.textContent       = i;
+        label.style.color        = 'var(--ink3)';
+      }
+
+      if (line) {
+        line.style.background = (i < n) ? 'var(--tangerine)' : 'var(--border)';
+      }
+    }
+
+    if (n === 4) updatePostPreview();
+
+    window.scrollTo(0, 0);
+  }
+
+  function updatePostPreview() {
+    var imgEl = document.getElementById('post-preview-img');
+    if (imgEl && window._selectedFile) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        imgEl.innerHTML = '<img src="' + e.target.result + '" style="width:100%;height:160px;object-fit:cover;display:block" alt="preview">';
+      };
+      reader.readAsDataURL(window._selectedFile);
+    } else if (imgEl) {
+      imgEl.innerHTML = '<span style="font-size:3rem">📷</span>';
+    }
+
+    var catEl = document.getElementById('post-preview-cat');
+    if (catEl) {
+      var catBtn = document.querySelector('#cat-select-grid .cat-tile.selected');
+      catEl.textContent = catBtn ? catBtn.dataset.emoji + ' ' + (currentLang === 'en' ? catBtn.dataset.labelEn : catBtn.dataset.label) : t('post_no_cat_preview');
+    }
+
+    var descEl = document.getElementById('post-preview-desc');
+    if (descEl) {
+      var desc = document.getElementById('desc-input').value.trim();
+      descEl.textContent = desc || t('post_no_desc_preview');
+      descEl.style.fontStyle = desc ? 'normal' : 'italic';
+    }
+  }
+
+  function enableBtn(id, on) {
+    var btn = document.getElementById(id);
+    if (!btn) return;
+    if (on) {
+      btn.disabled = false;
+      btn.style.background  = 'var(--tangerine)';
+      btn.style.color       = '#fff';
+      btn.style.cursor      = 'pointer';
+      btn.style.boxShadow   = 'var(--sh)';
+    } else {
+      btn.disabled = true;
+      btn.style.background  = 'var(--surface3)';
+      btn.style.color       = 'var(--ink3)';
+      btn.style.cursor      = 'not-allowed';
+      btn.style.boxShadow   = 'none';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    setPostStep(1);
+    document.getElementById('post-next-1')?.addEventListener('click', function() { setPostStep(2); });
+    document.getElementById('post-back-1')?.addEventListener('click', function() { showScreen('home'); });
+    document.getElementById('post-back-2')?.addEventListener('click', function() { setPostStep(1); });
+    document.getElementById('post-back-3')?.addEventListener('click', function() { setPostStep(2); });
+    document.getElementById('post-skip-1')?.addEventListener('click', function() { setPostStep(2); });
+    document.getElementById('post-next-2')?.addEventListener('click', function() { setPostStep(3); });
+    document.getElementById('post-next-3')?.addEventListener('click', function() { setPostStep(4); });
+    document.getElementById('post-back-4')?.addEventListener('click', function() { setPostStep(3); });
+
+    var fileInput = document.getElementById('photo-file-input');
+    if (fileInput) {
+      fileInput.addEventListener('change', function() {
+        if (fileInput.files[0]) enableBtn('post-next-1', true);
+      });
+    }
+
+    var origShowScreen = window.showScreen;
+    if (origShowScreen) {
+      window.showScreen = function(name) {
+        if (name === 'post') {
+          var hasFile = !!window._selectedFile;
+          var hasCat  = !!document.querySelector('#cat-select-grid .cat-tile.selected');
+          if (!hasFile && !hasCat) setPostStep(1);
+        }
+        origShowScreen.apply(this, arguments);
+      };
+    }
+  });
+
+  window._postStepController = {
+    enableNext1: function() { enableBtn('post-next-1', true); },
+    goTo: setPostStep
+  };
+})();
+</script>
+</body>
+</html>
