@@ -27,7 +27,6 @@ const ES = {
   post_upload_sub:'JPG, PNG o WEBP · Máx 10MB',
   post_upload_badge:'o tocá para elegir',
   post_upload_badge_done:'Foto cargada',
-  post_continue:'Continuar',
   post_hint2:'¿En qué categoría entra este coso?',
   post_hint3:'Contanos un poco más sobre el objeto.',
   post_desc_label:'Descripción', post_desc_optional:'(opcional)',
@@ -39,6 +38,7 @@ const ES = {
   post_no_desc_preview:'Sin descripción', post_no_cat_preview:'— Sin categoría',
   post_publish:'Publicar ahora', post_edit:'Editar',
   post_btn:'Enviar', post_sending:'Enviando…',
+  post_continue:'Continuar', post_back:'Atrás', post_cancel:'Cancelar',
   modal_title:'¡Publicado!', modal_sub:'Tu publicación ya está visible en el feed.',
   modal_btn:'Entendido', modal_user_prefix:'Publicado como',
   modal_user_desc:'Podés ver el estado en tu historial.',
@@ -142,7 +142,6 @@ const EN = {
   post_upload_sub:'JPG, PNG or WEBP · Max 10MB',
   post_upload_badge:'or tap to choose',
   post_upload_badge_done:'Photo loaded',
-  post_continue:'Continue',
   post_hint2:'What category does this thing belong to?',
   post_hint3:'Tell us a bit more about the object.',
   post_desc_label:'Description', post_desc_optional:'(optional)',
@@ -154,7 +153,7 @@ const EN = {
   post_no_desc_preview:'No description', post_no_cat_preview:'— No category',
   post_publish:'Publish now', post_edit:'Edit',
   post_btn:'Submit', post_sending:'Submitting…',
-  post_back:'Back to home', post_back_step:'Back',
+  post_continue:'Continue', post_back:'Back', post_cancel:'Cancel',
   modal_title:'Posted!', modal_sub:'Your post is now visible in the feed.',
   modal_btn:'Got it', modal_user_prefix:'Posted as',
   modal_user_desc:'You can check the status in your history.',
@@ -300,7 +299,6 @@ function applyUI() {
     const el = document.getElementById(id);
     if (el) el.textContent = t(key);
   });
-  document.querySelectorAll('.post-continue-label').forEach(el => { el.textContent = t('post_continue'); });
   const descTa = document.getElementById('desc-input');
   if (descTa) descTa.placeholder = t('post_desc_placeholder');
 
