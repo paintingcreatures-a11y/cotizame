@@ -1,5 +1,4 @@
 let selectedCatId  = null;
-let uploadedFileURL = null;
 
 function bindPost() {
   const grid = document.getElementById('cat-select-grid');
@@ -88,7 +87,6 @@ function handleFileSelect(file) {
       <img src="${e.target.result}" style="max-height:220px;max-width:100%;object-fit:cover;border-radius:var(--r-lg)" alt="preview">
       <div style="margin-top:10px;font-size:.8rem;color:var(--mint);font-weight:700">✓ ${t('post_upload_badge_done')}</div>
     `;
-    uploadedFileURL = e.target.result;
     window._selectedFile = file;
     if (window._postStepController) window._postStepController.enableNext1();
   };
@@ -189,7 +187,6 @@ async function submitPost() {
 
 function resetPostForm() {
   selectedCatId   = null;
-  uploadedFileURL = null;
   window._selectedFile = null;
   const descEl = document.getElementById('desc-input');
   if (descEl) descEl.value = '';

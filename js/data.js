@@ -15,7 +15,9 @@ function formatARS(n) {
 }
 
 function timeAgo(dateStr) {
+  if (!dateStr) return '—';
   const s = Math.floor((Date.now() - new Date(dateStr)) / 1000);
+  if (isNaN(s)) return '—';
   if (s < 60)    return (typeof currentLang !== 'undefined' && currentLang === 'en') ? 'now' : 'ahora';
   if (s < 3600)  return Math.floor(s/60) + 'm';
   if (s < 86400) return Math.floor(s/3600) + 'h';

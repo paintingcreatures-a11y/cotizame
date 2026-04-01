@@ -174,7 +174,7 @@ async function loadDashList() {
   } else {
     const { data } = await sb.from('valuations').select(`
       id, amount, created_at,
-      objects(id, description, status, categories(emoji, label))
+      objects(id, description, status, image_url, created_at, categories(slug, emoji, label))
     `).eq('user_id', currentUser.id).order('created_at',{ascending:false});
 
     const filtered = (data || []).filter(v =>
