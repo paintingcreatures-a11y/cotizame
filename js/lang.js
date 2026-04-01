@@ -31,7 +31,7 @@ const ES = {
   post_hint3:'Contanos un poco más sobre el objeto.',
   post_desc_label:'Descripción', post_desc_optional:'(opcional)',
   post_desc_placeholder:'¿Qué es? ¿Marca, modelo, estado?…',
-  post_anon:'Tu publicación es anónima.',
+  post_anon:'Tu publicación es completamente anónima.',
   post_anon_mode:'Publicando en modo anónimo.',
   post_sending_step:'Enviar →',
   post_hint4:'Revisá todo antes de publicar.',
@@ -92,11 +92,15 @@ const ES = {
   login_to_see:'Iniciá sesión para ver tu actividad.',
   terms_title:'Términos y privacidad', terms_updated:'Última actualización: enero 2025',
   terms_01_title:'Uso de la plataforma',
-  terms_01_body:'Cotizame el Coso es una plataforma comunitaria de valoración de objetos. Al usar la app, aceptás estas condiciones. El servicio está destinado a personas mayores de 18 años.',
+  terms_01_body:'Cotizame el Coso es una plataforma comunitaria de valoración de objetos. Al usar la app, aceptás estas condiciones. El servicio está destinado a personas mayores de 13 años.',
   terms_02_title:'Anonimato y datos',
-  terms_02_body:'Las publicaciones son anónimas.',
+  terms_02_body:'Las publicaciones son anónimas por defecto. Las cotizaciones nunca se asocian a tu identidad.',
   terms_03_title:'Contenido publicado',
   terms_03_body:'Al publicar una imagen, confirmás que tenés derecho a hacerlo. Queda prohibido publicar contenido ilegal, violento, sexual o que viole derechos de terceros.',
+  terms_04_title:'Eliminación de publicaciones',
+  terms_04_link:'cotizame.el.coso',
+  terms_04_pre:'¿Querés borrar una publicación? Escribinos a ',
+  terms_04_post:' y lo haremos lo antes posible.',
   cats_title:'Comunidades', cats_following:'Siguiendo',
   objects_published:'objetos publicados',
   follow_btn:'+ Seguir', following_btn:'✓ Siguiendo',
@@ -146,7 +150,7 @@ const EN = {
   post_hint3:'Tell us a bit more about the object.',
   post_desc_label:'Description', post_desc_optional:'(optional)',
   post_desc_placeholder:'What is it? Brand, model, condition?…',
-  post_anon:'Your post is anonymous.',
+  post_anon:'Your post is completely anonymous.',
   post_anon_mode:'Posting anonymously.',
   post_sending_step:'Send →',
   post_hint4:'Review everything before posting.',
@@ -206,11 +210,15 @@ const EN = {
   login_to_see:'Sign in to see your activity.',
   terms_title:'Terms & privacy', terms_updated:'Last updated: January 2025',
   terms_01_title:'Platform use',
-  terms_01_body:'Cotizame el Coso is a community object valuation platform. By using the app, you accept these terms. The service is intended for people over 18 years old.',
+  terms_01_body:'Cotizame el Coso is a community object valuation platform. By using the app, you accept these terms. The service is intended for people over 13 years old.',
   terms_02_title:'Anonymity & data',
-  terms_02_body:'Posts are anonymous.',
+  terms_02_body:'Posts are anonymous by default. Valuations are never linked to your identity.',
   terms_03_title:'Published content',
   terms_03_body:'By posting an image, you confirm you have the right to do so. Publishing illegal, violent, sexual or third-party rights-infringing content is prohibited.',
+  terms_04_title:'Post removal',
+  terms_04_link:'cotizame.el.coso',
+  terms_04_pre:'Want to remove a post? Write to us at ',
+  terms_04_post:' and we\'ll take care of it as soon as possible.',
   cats_title:'Communities', cats_following:'Following',
   objects_published:'objects published',
   follow_btn:'+ Follow', following_btn:'✓ Following',
@@ -313,10 +321,18 @@ function applyUI() {
     'terms-01-title': 'terms_01_title', 'terms-01-body': 'terms_01_body',
     'terms-02-title': 'terms_02_title', 'terms-02-body': 'terms_02_body',
     'terms-03-title': 'terms_03_title', 'terms-03-body': 'terms_03_body',
+    'terms-04-title': 'terms_04_title',
   };
   Object.entries(termsMap).forEach(([id, key]) => {
     const el = document.getElementById(id); if (el) el.textContent = t(key);
   });
+  const terms04body = document.getElementById('terms-04-body');
+  const terms04link = document.getElementById('terms-04-link');
+  if (terms04body && terms04link) {
+    terms04body.childNodes[0].textContent = t('terms_04_pre');
+    terms04link.textContent = t('terms_04_link');
+    terms04body.lastChild.textContent = t('terms_04_post');
+  }
 
   const valBtn = document.getElementById('btn-submit-val');
   if (valBtn && !valBtn.disabled) valBtn.textContent = t('val_btn');

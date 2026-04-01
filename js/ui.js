@@ -21,7 +21,7 @@
     });
     filter.addEventListener('scroll', updateArrows, { passive: true });
 
-    // Re-check after feed renders new pills
+   
     var obs = new MutationObserver(updateArrows);
     obs.observe(filter, { childList: true });
     updateArrows();
@@ -49,21 +49,21 @@
       panel.style.display = (i === n) ? '' : 'none';
 
       if (i < n) {
-        // completed
+        
         circle.style.background  = 'var(--tangerine)';
         circle.style.color       = '#fff';
         circle.style.boxShadow   = '2px 2px 0 var(--ink)';
         circle.textContent       = '✓';
         label.style.color        = 'var(--tangerine)';
       } else if (i === n) {
-        // active
+       
         circle.style.background  = 'var(--tangerine)';
         circle.style.color       = '#fff';
         circle.style.boxShadow   = '2px 2px 0 var(--ink)';
         circle.textContent       = i;
         label.style.color        = 'var(--tangerine)';
       } else {
-        // future
+       
         circle.style.background  = 'var(--surface3)';
         circle.style.color       = 'var(--ink)';
         circle.style.boxShadow   = 'none';
